@@ -1,0 +1,4 @@
+
+enum DIR {
+	WEST, NORTH, EAST, SOUTH
+};
