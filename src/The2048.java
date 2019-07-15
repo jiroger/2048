@@ -10,18 +10,18 @@ public class The2048 extends PApplet {
 		PApplet.main("The2048");
 	}
 
-	public final int GRID_X_OFFSET = 15; // distance from left to start drawing grid
-	public final int GRID_Y_OFFSET = 85; // distance from top to start drawing grid
-	public final int BLOCK_SIZE = 120; // width and height of a block
-	public final int BLOCK_MARGIN = 15; // separation between blocks
-	public final int BLOCK_RADIUS = 5; // for making blocks look slightly rounded in corners
-	public final int Y_TEXT_OFFSET = 7; // for centering the numbers when drawn on blocks
-	public final int GRID_SIZE = 4; // number of rows and columns
-	public final int COLS = GRID_SIZE;
-	public final int ROWS = GRID_SIZE;
+	public static final int GRID_X_OFFSET = 15; // distance from left to start drawing grid
+	public static final int GRID_Y_OFFSET = 85; // distance from top to start drawing grid
+	public static final int BLOCK_SIZE = 120; // width and height of a block
+	public static final int BLOCK_MARGIN = 15; // separation between blocks
+	public static final int BLOCK_RADIUS = 5; // for making blocks look slightly rounded in corners
+	public static final int Y_TEXT_OFFSET = 7; // for centering the numbers when drawn on blocks
+	public static final int GRID_SIZE = 4; // number of rows and columns
+	public static final int COLS = GRID_SIZE;
+	public static final int ROWS = GRID_SIZE;
 	public PFont blockFont;
 
-	public final int SCORE_Y_OFFSET = 36;
+	public static final int SCORE_Y_OFFSET = 36;
 	public PFont scoreFont;
 
 	public final color BACKGROUND_COLOR = color(189, 195, 199);
