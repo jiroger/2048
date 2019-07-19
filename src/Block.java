@@ -1,11 +1,10 @@
 
 public class Block {
 	private final int EMPTY = 0;
-	private int value = EMPTY; // Power of 2 for the block; 0 means blank
-	// If a block moves, it could merge with another block of like value.
+	private int value = EMPTY; // 0 means blank; value always in powers of 2
+	// if a block moves, it could merge with another block of the same value.
 	// hasChanged being set to true means that for this keypress, the block has
-	// changed
-	// already and other blocks cannot merge with it.
+	// changed already and other blocks cannot merge with it.
 	private boolean hasChanged = false;
 
 	public Block() {

@@ -1,4 +1,4 @@
-// Used to store grid information about blocks that need to move after a key press.
+// used to store grid information about blocks that need to move after a key press.
 
 public class Animation {
 	private int fromCol;
@@ -9,10 +9,10 @@ public class Animation {
 	private int toValue;
 
 	public Animation(int fCol, int fRow, int fv, int tcol, int trow, int tv) {
-		fromCol = fCol;
+		fromCol = fCol; // from refers to before block move
 		fromRow = fRow;
 		fromValue = fv;
-		toCol = tcol;
+		toCol = tcol; // to refers to after block is moved
 		toRow = trow;
 		toValue = tv;
 	}

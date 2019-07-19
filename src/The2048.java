@@ -28,9 +28,8 @@ public class The2048 extends PApplet {
 	public Grid grid = new Grid(COLS, ROWS, this);
 	public Grid backup_grid = new Grid(COLS, ROWS, this);
 
-	// Every time a key is pressed, blocks need to move visually (if there is a way
-	// to move).
-	// All of the animations to be carried out are stored in anims.
+	// all of the animations (e.g. when key pressed, blocks need to visuallly move)
+	// to be carried out are stored in anims.
 	public ArrayList<Animation> anims = new ArrayList<Animation>();
 	// number of movements to complete a block animation
 	public final int TICK_STEPS = 20;
@@ -49,15 +48,12 @@ public class The2048 extends PApplet {
 		noStroke();
 
 		blockFont = createFont("LucidaSans", 50);
-		;
 		textFont(blockFont);
 		textAlign(CENTER, CENTER);
 
 		scoreFont = createFont("LucidaSans", 42);
 
-		// Comment out this setBlock() and replace it with a placeBlock() once you have
-		// written placeBlock().
-		grid.placeBlock();
+		grid.placeBlock(); // start with 2 blocks on the board
 		grid.placeBlock();
 		for (int i = 0; i < grid.getEmptyLocations().size(); i++) {
 			System.out
@@ -69,11 +65,9 @@ public class The2048 extends PApplet {
 		System.out.println(grid.hasCombinableNeighbors());
 		// System.out.println(grid.someBlockCanMoveInDirection(DIR.NORTH));
 
-		backup_grid.gridCopy(grid); // save grid in backup_grid in case Undo is needed
+		backup_grid.gridCopy(grid); // save grid in backup_grid in case undo is needed
 	}
 
-	// This is where the animation will take place
-	// draw() exhibits the behavior of being inside an infinite loop
 	@Override
 	public void draw() {
 		background(BACKGROUND_COLOR);
@@ -81,7 +75,7 @@ public class The2048 extends PApplet {
 		grid.showScore();
 		grid.showBlocks();
 
-		// Don't show GAME OVER during an animation
+		// don't show GAME OVER during an animation
 		if (animation_ticks == TICK_STEPS && grid.isGameOver()) {
 			grid.showGameOver();
 		}
@@ -213,25 +207,14 @@ public class The2048 extends PApplet {
 	}
 
 	public void startAnimations() {
-		// Effectively turns draw() into a for loop with animation_ticks as the index
+		// turns draw into a for loop with animation_ticks as index
 		animation_ticks = 0;
 	}
-
-	// KEY EVENTS SECTION KEY EVENTS SECTION
-
-	// The only keys (and corresponding keyCodes) that are used to control the game
-	// are:
-	// * RETURN (10)--Restarts game if Game Over is being displayed
-	// * LEFT ARROW (37)--Move blocks to the left
-	// * UP ARROW (38)--Move blocks up
-	// * RIGHT ARROW (39)--Move blocks right
-	// * DOWN ARROW (40)--Move blocks down
-	// * Upper-case 'U' (85)--Undo (revert one keypress)
 
 	@Override
 	public void keyPressed() {
 		if (grid.isGameOver()) {
-			// If RETURN is pressed, then start a fresh game with one block
+			// return pressed = start a fresh game with one block
 			if (keyCode == 10) {
 				grid.initBlocks();
 				grid.placeBlock();
@@ -239,23 +222,21 @@ public class The2048 extends PApplet {
 			return;
 		}
 
-		// If a key is pressed and it isn't LEFT (arrow), RIGHT, UP, DOWN, or U,
+		// if key != LEFT (arrow), RIGHT, UP, DOWN, or U,
 		// then ignore it by returning immediately
 		if (!(Utility_Functions.isBetween(keyCode, 37, 40) || keyCode == 85))
 			return;
 
-		if (keyCode == 85) { // ASCII value for upper case U (for Undo)
-			grid.gridCopy(backup_grid); // Copy the backup grid to the main grid
+		if (keyCode == 85) { // ASCII value for upper case U = undo
+			grid.gridCopy(backup_grid); // copy the backup grid to the main grid
 			return;
 		}
 
 		DIR dir;
 		DIR[] dirs = { DIR.WEST, DIR.NORTH, DIR.EAST, DIR.SOUTH };
-		// Key codes for LEFT ARROW, UP ARROW, RIGHT ARROW, and DOWN ARROW are 37--40.
-		// By subtracting 37, we get an appropriate index for the dirs array that
-		// converts
-		// LEFT ARROW to DIR.WEST, UP ARROW to DIR.
-		dir = dirs[keyCode - 37];
+		// keycodes for LEFT ARROW, UP ARROW, RIGHT ARROW, and DOWN ARROW are 37--40.
+
+		dir = dirs[keyCode - 37]; // that way we have a working index that connects left arrow to dir.west, etc.
 
 		if (!grid.someBlockCanMoveInDirection(dir))
 			return;

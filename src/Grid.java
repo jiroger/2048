@@ -45,6 +45,7 @@ public class Grid {
 		}
 	}
 
+	// is the col/row valid?
 	public boolean isValid(int col, int row) {
 		return col < COLS && row < ROWS && col >= 0 && row >= 0;
 	}
@@ -55,6 +56,7 @@ public class Grid {
 		block[col2][row2] = temp;
 	}
 
+	// can two non-zero blocks merge?
 	public boolean canMerge(int col1, int row1, int col2, int row2) {
 		return (block[col1][row1].getValue() == block[col2][row2].getValue()) && block[col1][row1].getValue() > 0;
 	}
@@ -67,13 +69,13 @@ public class Grid {
 		}
 	}
 
-	// Is there an open space on the grid to place a new block?
+	// is there an open space on the grid to place a new block?
 	public boolean canPlaceBlock() {
 		return getEmptyLocations().size() > 0;
 	}
 
+	// puts all empty locations into an arraylist called locs
 	public ArrayList<Location> getEmptyLocations() {
-		// Put all locations that are currently empty into locs
 		ArrayList<Location> locs = new ArrayList<Location>();
 		for (int i = 0; i < COLS; i++) {
 			for (int j = 0; j < ROWS; j++) {
@@ -85,13 +87,14 @@ public class Grid {
 		return locs;
 	}
 
+	// randomly selects an empty location
 	public Location selectLocation(ArrayList<Location> locs) {
 		int randomLocation = (int) (Math.random() * locs.size());
 		// System.out.println(randomLocation + " ok");
 		return locs.get(randomLocation);
 	}
 
-	// Randomly select an open location to place a block.
+	// randomly selects an open location to place a block.
 	public void placeBlock() {
 		Location theOne = selectLocation(getEmptyLocations());
 		int twoOrFour = (int) (Math.random() * 8 + 1);
@@ -102,7 +105,7 @@ public class Grid {
 		}
 	}
 
-	// Are there any adjacent blocks that contain the same value?
+	// are there any adjacent blocks that contain the same value?
 	public boolean hasCombinableNeighbors() {
 		for (int i = 0; i < COLS; i++) {
 			for (int j = 0; j < ROWS; j++) {
@@ -146,7 +149,7 @@ public class Grid {
 		return false;
 	}
 
-	// Computes the number of points that the player has scored
+	// computes the number of points that the player has scored
 	public void computeScore() {
 		score = 0;
 		for (int i = 0; i < COLS; i++) {
@@ -193,7 +196,7 @@ public class Grid {
 		}
 	}
 
-	// Copy the contents of another grid to this one
+	// copy the contents of another grid to this one
 	public void gridCopy(Grid other) {
 		for (int i = 0; i < other.COLS; i++) {
 			for (int j = 0; j < other.ROWS; j++) {
@@ -204,6 +207,7 @@ public class Grid {
 
 	public boolean isGameOver() {
 		return !hasCombinableNeighbors() && getEmptyLocations().size() == 0;
+		// if u cant combine with any neighbors and there are no empty locations, u lose
 	}
 
 	public void showGameOver() {
@@ -211,15 +215,4 @@ public class Grid {
 		parent.text("GAME OVER", The2048.GRID_X_OFFSET + 2 * The2048.BLOCK_SIZE + 15,
 				The2048.GRID_Y_OFFSET + 2 * The2048.BLOCK_SIZE + 15);
 	}
-
-	// public String toString() {
-	// String str = "";
-	// for (int row = 0; row < ROWS; row++) {
-	// for (int col = 0; col < COLS; col++) {
-	// str += block[col][row].getValue() + " ";
-	// }
-	// str += "\n"; // "\n" is a newline character
-	// }
-	// return str;
-	// }
 }
