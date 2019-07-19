@@ -178,7 +178,7 @@ public class Grid {
 							The2048.GRID_Y_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * row,
 							The2048.BLOCK_SIZE, The2048.BLOCK_SIZE, The2048.BLOCK_RADIUS);
 					parent.fill(parent.color(108, 122, 137));
-					parent.text(parent.str(b.getValue()),
+					parent.text(Integer.toString(b.getValue()),
 							The2048.GRID_X_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * col
 									+ The2048.BLOCK_SIZE / 2,
 							The2048.GRID_Y_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * row

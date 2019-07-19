@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-import javafx.animation.Animation;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -40,8 +39,12 @@ public class The2048 extends PApplet {
 	public int animation_ticks = TICK_STEPS;
 
 	@Override
+	public void settings() {
+		size(555, 625);
+	}
+
+	@Override
 	public void setup() {
-		size(555, 625); // Do not include P3D as third input as it prevents keyDown; no idea why
 		background(BACKGROUND_COLOR);
 		noStroke();
 
@@ -98,10 +101,12 @@ public class The2048 extends PApplet {
 			// Iterate on the anims ArrayList to
 			for (int i = 0; i < anims.size(); i++) {
 				Animation a = anims.get(i);
-				float col = 1.0 * ((a.getToCol() - a.getFromCol()) * animation_ticks) / TICK_STEPS + a.getFromCol();
-				float row = 1.0 * ((a.getToRow() - a.getFromRow()) * animation_ticks) / TICK_STEPS + a.getFromRow();
-				float adjustment = (log(a.getFromValue()) / log(2)) - 1;
-				fill(color(242, 241 - 8 * adjustment, 239 - 8 * adjustment));
+				float col = (float) (1.0 * ((a.getToCol() - a.getFromCol()) * animation_ticks) / TICK_STEPS
+						+ a.getFromCol());
+				float row = (float) (1.0 * ((a.getToRow() - a.getFromRow()) * animation_ticks) / TICK_STEPS
+						+ a.getFromRow());
+				double adjustment = (log(a.getFromValue()) / log(2)) - 1;
+				fill(color(242, (int) (241 - 8 * adjustment), (int) (239 - 8 * adjustment)));
 				rect(GRID_X_OFFSET + (BLOCK_SIZE + BLOCK_MARGIN) * col,
 						GRID_Y_OFFSET + (BLOCK_SIZE + BLOCK_MARGIN) * row, BLOCK_SIZE, BLOCK_SIZE, BLOCK_RADIUS);
 				fill(color(108, 122, 137));
