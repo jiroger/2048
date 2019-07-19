@@ -19,13 +19,13 @@ public class The2048 extends PApplet {
 	public static final int GRID_SIZE = 4; // number of rows and columns
 	public static final int COLS = GRID_SIZE;
 	public static final int ROWS = GRID_SIZE;
-	public PFont blockFont;
+	public static PFont blockFont;
 
 	public static final int SCORE_Y_OFFSET = 36;
-	public PFont scoreFont;
+	public static PFont scoreFont;
 
-	public final color BACKGROUND_COLOR = color(189, 195, 199);
-	public final color BLANK_COLOR = color(203, 208, 210);
+	public final int BACKGROUND_COLOR = color(189, 195, 199);
+	public final int BLANK_COLOR = color(203, 208, 210);
 	public Grid grid = new Grid(COLS, ROWS, this);
 	public Grid backup_grid = new Grid(COLS, ROWS, this);
 

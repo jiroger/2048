@@ -1,6 +1,6 @@
 import java.util.ArrayList;
+
 import processing.core.PApplet;
-import java.math.*;
 
 public class Grid {
 	PApplet parent;
@@ -161,11 +161,11 @@ public class Grid {
 	}
 
 	public void showScore() {
-      parent.textFont(scoreFont);
-      parent.fill(#000000);
-      parent.text("Score: " + getScore(), width/2, The2048.SCORE_Y_OFFSET);
-      parent.textFont(blockFont);
-  }
+		parent.textFont(The2048.scoreFont);
+		parent.fill(parent.color(0, 0, 0));
+		parent.text("Score: " + getScore(), parent.width / 2, The2048.SCORE_Y_OFFSET);
+		parent.textFont(The2048.blockFont);
+	}
 
 	public void showBlocks() {
 		for (int row = 0; row < ROWS; row++) {
@@ -173,18 +173,18 @@ public class Grid {
 				Block b = block[col][row];
 				if (!b.isEmpty()) {
 					double adjustment = (Math.log(b.getValue()) / Math.log(2)) - 1;
-					parent.fill(color(242, 241 - 8 * adjustment, 239 - 8 * adjustment));
+					parent.fill(parent.color(242, (int) (241 - 8 * adjustment), (int) (239 - 8 * adjustment)));
 					parent.rect(The2048.GRID_X_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * col,
 							The2048.GRID_Y_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * row,
 							The2048.BLOCK_SIZE, The2048.BLOCK_SIZE, The2048.BLOCK_RADIUS);
-					parent.fill(color(108, 122, 137));
-					parent.text(str(b.getValue()),
+					parent.fill(parent.color(108, 122, 137));
+					parent.text(parent.str(b.getValue()),
 							The2048.GRID_X_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * col
 									+ The2048.BLOCK_SIZE / 2,
 							The2048.GRID_Y_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * row
-									+ The2048.BLOCK_SIZE / 2 - Y_TEXT_OFFSET);
+									+ The2048.BLOCK_SIZE / 2 - The2048.Y_TEXT_OFFSET);
 				} else {
-					parent.fill(BLANK_COLOR);
+					parent.fill(parent.color(203, 208, 210));
 					parent.rect(The2048.GRID_X_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * col,
 							The2048.GRID_Y_OFFSET + (The2048.BLOCK_SIZE + The2048.BLOCK_MARGIN) * row,
 							The2048.BLOCK_SIZE, The2048.BLOCK_SIZE, The2048.BLOCK_RADIUS);
@@ -207,9 +207,10 @@ public class Grid {
 	}
 
 	public void showGameOver() {
-		parent.fill(#0000BB);
-		parent.text("GAME OVER", The2048.GRID_X_OFFSET + 2*The2048.BLOCK_SIZE + 15, The2048.GRID_Y_OFFSET + 2*The2048.BLOCK_SIZE + 15);
-  }
+		parent.fill(parent.color(0, 0, 187));
+		parent.text("GAME OVER", The2048.GRID_X_OFFSET + 2 * The2048.BLOCK_SIZE + 15,
+				The2048.GRID_Y_OFFSET + 2 * The2048.BLOCK_SIZE + 15);
+	}
 
 	// public String toString() {
 	// String str = "";
