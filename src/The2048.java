@@ -34,7 +34,7 @@ public class The2048 extends PApplet {
 	// number of movements to complete a block animation
 	public final int TICK_STEPS = 20;
 	// counter for number of iterations have been used to animate block movement
-	// if animation_ticks == TICK_STEPS, then the display is not moving blocks
+	// if animation_ticks == TICK_STEPS, then display is not moving blocks
 	public int animation_ticks = TICK_STEPS;
 
 	@Override
@@ -89,14 +89,13 @@ public class The2048 extends PApplet {
 				}
 			}
 
-			// animation_ticks is used to count up to TICK_STEPS, which
-			// determines how many
-
-			// Iterate on the anims ArrayList to
+			// iterate on the anims arraylist to update graphics
 			for (int i = 0; i < anims.size(); i++) {
 				Animation a = anims.get(i);
 				float col = (float) (1.0 * ((a.getToCol() - a.getFromCol()) * animation_ticks) / TICK_STEPS
 						+ a.getFromCol());
+				// must use float instead of double because processing's fill and rect methods
+				// only accept floats
 				float row = (float) (1.0 * ((a.getToRow() - a.getFromRow()) * animation_ticks) / TICK_STEPS
 						+ a.getFromRow());
 				double adjustment = (log(a.getFromValue()) / log(2)) - 1;
@@ -112,7 +111,7 @@ public class The2048 extends PApplet {
 	}
 
 	public void gameUpdate(DIR direction) {
-		// BEGIN MOVEMENT SECTION
+		// MOVEMENT SECTION
 		Grid newGrid = new Grid(COLS, ROWS, this);
 		newGrid.gridCopy(grid); //
 		anims = new ArrayList<Animation>();
@@ -128,15 +127,15 @@ public class The2048 extends PApplet {
 					int colPos = col;
 					int val = newGrid.getBlock(col, row).getValue();
 					if (!newGrid.getBlock(col, row).isEmpty()) {
-						// While the position being inspected is in the grid and does not contain a
-						// block
-						// whose values has already been changed this move
+						// while the position being inspected is in the grid and does not contain a
+						// block whose values has already been changed this move
 						while (newGrid.isValid(colPos + colAdjust, row)
 								&& !newGrid.getBlock(colPos, row).hasChanged()) {
 							if (newGrid.getBlock(colPos + colAdjust, row).isEmpty()) {
 								// if (newGrid[colPos + colAdjust][row].getValue() == -1) {
-								// Move the block into the empty space and create an empty space where the block
-								// was
+								// move the block into empty space and create an empty space where the block
+								// used to be
+
 								newGrid.swap(colPos, row, colPos + colAdjust, row);
 							} else if (newGrid.canMerge(colPos + colAdjust, row, colPos, row)) {
 								if (!newGrid.getBlock(colPos + colAdjust, row).hasChanged()) {
@@ -144,12 +143,12 @@ public class The2048 extends PApplet {
 											newGrid.getBlock(colPos, row).getValue() * 2, true);
 									newGrid.setBlock(colPos, row);
 								}
-							} else { // Nowhere to move to
-								break; // Exit while loop
+							} else { // theres nowhere to go, so u exit the loop
+								break;
 							}
 							colPos += colAdjust;
 						}
-						// If a block moves, add its information to the list of blocks that must be
+						// if block moves, add its information to the list of blocks that must be
 						// animated
 						anims.add(new Animation(col, row, val, colPos, row, val));
 					}
@@ -157,9 +156,8 @@ public class The2048 extends PApplet {
 			}
 		}
 
-		// NORTH-SOUTH movement
-		//
-		// Analogous to EAST-WEST movement
+		// NORTH-SOUTH movement, pretty much same to above
+
 		if (direction == DIR.NORTH || direction == DIR.SOUTH) {
 			int startingRow = direction == DIR.SOUTH ? GRID_SIZE - 1 : 0;
 			int endingRow = direction == DIR.SOUTH ? -1 : GRID_SIZE;
@@ -181,12 +179,11 @@ public class The2048 extends PApplet {
 									newGrid.setBlock(col, rowPos);
 								}
 							} else {
-								break; // Exit while loop
+								break;
 							}
 							rowPos += rowAdjust;
 						}
-						// If a block moves, add its information to the list of blocks that must be
-						// animated
+
 						anims.add(new Animation(col, row, val, col, rowPos, val));
 					}
 				}
@@ -198,8 +195,8 @@ public class The2048 extends PApplet {
 			newGrid.placeBlock();
 		}
 
-		backup_grid.gridCopy(grid); // Copy the grid to backup in case Undo is needed
-		grid.gridCopy(newGrid); // The newGrid should now be made the main grid
+		backup_grid.gridCopy(grid); // this is so that there's a backup if u want to undo ur move
+		grid.gridCopy(newGrid); // the newGrid should now be made the main grid
 
 		// END MOVEMENT SECTION
 
